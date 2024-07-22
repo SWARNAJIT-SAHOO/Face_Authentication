@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function CameraBox() {
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const startCamera = async () => {
     try {
@@ -23,6 +24,23 @@ function CameraBox() {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       setStream(null);
+    }
+  };
+
+  const captureImage = () => {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+      // Optionally, you can save the captured image as a data URL or do something with it
+      const dataURL = canvas.toDataURL('image/png');
+      console.log("Captured Image Data URL:", dataURL);
+
+      // Stop the camera after capturing
+      stopCamera();
     }
   };
 
@@ -55,13 +73,14 @@ function CameraBox() {
         <Col xs={12} md={6} className="d-flex justify-content-center align-items-center mb-4 mb-md-0">
           <div style={{ width: '100%', height: '0', paddingBottom: '66.67%', backgroundColor: 'black', border: '5px solid lightgreen', borderRadius: '1rem', position: 'relative' }}>
             <video ref={videoRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '1rem' }}></video>
+            <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           </div>
         </Col>
         <Col xs={12} md={6} className="d-flex flex-column justify-content-center align-items-center">
-          <Button variant="primary" className="mb-2" style={{ fontSize: '2rem', padding: '15px 20px',marginBottom:'0.5rem', width: '80%' }} onClick={startCamera}>Turn on Camera</Button>
-          <Button variant="primary" style={{ fontSize: '2rem', padding: '15px 20px',marginBottom:'0.5rem', width: '80%' }}>Upload Image</Button>
-          <Button variant="primary" style={{ fontSize: '2rem', padding: '15px 20px',marginBottom:'0.5rem', width: '80%' }}>Capture</Button>
-          <Button variant="primary" style={{ fontSize: '2rem', padding: '15px 20px',marginBottom:'0.5rem', width: '80%' }}>Choose a File</Button>
+          <Button variant="primary" className="mb-2" style={{ fontSize: '2rem', padding: '15px 20px', marginBottom: '0.5rem', width: '80%' }} onClick={startCamera}>Turn on Camera</Button>
+          <Button variant="primary" className="mb-2" style={{ fontSize: '2rem', padding: '15px 20px', marginBottom: '0.5rem', width: '80%' }}>Upload Image</Button>
+          <Button variant="primary" className="mb-2" style={{ fontSize: '2rem', padding: '15px 20px', marginBottom: '0.5rem', width: '80%' }} onClick={captureImage}>Capture</Button>
+          <Button variant="primary" className="mb-2" style={{ fontSize: '2rem', padding: '15px 20px', marginBottom: '0.5rem', width: '80%' }}>Choose a File</Button>
         </Col>
       </Row>
     </Container>
