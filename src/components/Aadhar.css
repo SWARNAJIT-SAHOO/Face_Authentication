@@ -1,0 +1,54 @@
+.card {
+  width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ff9933;
+  padding-bottom: 10px;
+}
+
+.header .logo {
+  width: 50px;
+}
+
+.header .title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff9933;
+}
+
+.photo {
+  margin-left: 7rem;
+  margin-right: 10rem;
+  border-radius: 10%;
+  float: left;
+  width: auto;
+  height: auto;
+  border: 1px solid #ccc;
+
+}
+
+.details {
+  overflow: hidden;
+}
+
+.details p {
+  margin: 5px 0;
+}
+
+.footer {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
